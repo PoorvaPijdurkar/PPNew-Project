@@ -1,0 +1,162 @@
+<div class="d-flex justify-content-center">
+  <div class="col-10">
+    <h2 id="myUserLabel">BOM Details</h2>
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="editForm">
+          <div class="row" style="display: flex; align-items: center">
+            <mat-form-field class="col-2 form-Field">
+              <input matInput placeholder="Item Name" formControlName="itemName" />
+              <mat-error
+                *ngIf="editForm.get('itemName')!.invalid && (editForm.get('itemName')!.dirty || editForm.get('itemName')!.touched)"
+              >
+                <span *ngIf="editForm.get('itemName')?.errors?.required">Item Name is Mandatory</span>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-2 form-Field">
+              <input matInput placeholder="Item Type" formControlName="prodType" />
+            </mat-form-field>
+
+            <mat-form-field class="col-2 form-Field">
+              <input matInput formControlName="prodCode" placeholder="Item Code" />
+              <mat-error
+                *ngIf="editForm.get('prodCode')!.invalid && (editForm.get('prodCode')!.dirty || editForm.get('prodCode')!.touched)"
+              >
+                <span *ngIf="editForm.get('prodCode')?.errors?.required">Item Code is Mandatory</span>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-2 form-Field">
+              <input matInput formControlName="qty" placeholder="Quantity" numbersOnly />
+              <mat-error *ngIf="editForm.get('qty')!.invalid && (editForm.get('qty')!.dirty || editForm.get('qty')!.touched)">
+                <span *ngIf="editForm.get('qty')?.errors?.required">Quantity is Mandatory</span>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-2 form-Select">
+              <mat-select name="uom" formControlName="uom" [(value)]="selected">
+                <mat-option *ngFor="let unit of unitOfMeasure" [value]="unit">{{ unit }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-2 form-Field ml-4">
+              <input matInput formControlName="bomLevel" placeholder="Level" />
+            </mat-form-field>
+          </div>
+        </form>
+        <br />
+
+        <mat-divider></mat-divider>
+        <div style="padding-top: 10px; margin-top: 10px" *ngIf="!['view'].includes(this.screenMode)">
+          <form [formGroup]="addProductForm">
+            <div class="row">
+              <mat-form-field class="col-2">
+                <mat-label>Product Name</mat-label>
+                <mat-select placeholder="Select Product Name" formControlName="productName" (selectionChange)="onProductNameChange()">
+                  <mat-option *ngFor="let product of skuData" [value]="product">{{ product.productName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addProductForm.get('productName')!.invalid && addProductForm.get('productName')!.touched">
+                  <span *ngIf="addProductForm.controls.productName?.hasError('required')">Product Name is Mandatory</span>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="col-2">
+                <mat-label>Quantity</mat-label>
+                <input placeholder="Quantity" matInput formControlName="quantity" numbersOnly />
+                <mat-error
+                  *ngIf="
+                    addProductForm.get('quantity')!.invalid && (addProductForm.get('quantity')!.dirty || editForm.get('quantity')!.touched)
+                  "
+                >
+                  <span *ngIf="addProductForm.controls.quantity?.hasError('required')">Quantity is Mandatory</span>
+                  <span *ngIf="addProductForm.controls.quantity?.hasError('min')">Quantity cannot be negative</span>
+                </mat-error>
+              </mat-form-field>
+              <div class="col-2" style="margin-top: 13px">
+                <label>Price : {{ addProductForm.get('productName')?.value?.price }}</label>
+              </div>
+              <div class="col-3" style="margin-top: 13px">
+                <label>Product Type: {{ addProductForm.get('productName')?.value?.productType }}</label>
+              </div>
+              <div class="col-3 text-end" style="margin-top: 3px">
+                <button mat-raised-button class="btn-primary" type="button" (click)="add()">Add</button>
+                <button mat-raised-button type="button" (click)="resetForm()" style="margin-left: 6px">Reset</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Table Columns -->
+          <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef>No. </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.position }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.productName }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="productCode">
+            <mat-header-cell *matHeaderCellDef> Product Code </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.productCode }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="productType">
+            <mat-header-cell *matHeaderCellDef> Product Type </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.productType }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="unitOfMeasure">
+            <mat-header-cell *matHeaderCellDef> Unit of Measure </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.unitOfMeasure }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef> Quantity (in %) </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.quantity }}% </mat-cell>
+            <mat-footer-cell *matFooterCellDef>Total : {{ calculateTotalQuantity() }}%</mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="deleteAndEditData" sticky>
+            <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button (click)="edit(element)" mat-icon-button color="primary" aria-label="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button (click)="delete(element)" mat-icon-button color="warn" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-footer-row *matFooterRowDef="displayedColumns"> </mat-footer-row>
+        </mat-table>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="text-end" *ngIf="['edit', 'add'].includes(screenMode)" style="margin-top: 10px">
+      <button style="margin-right: 5px" mat-raised-button class="btn-primary" (click)="save()">Save</button>
+      <button style="margin-right: 5px" mat-raised-button (click)="cancel()">Cancel</button>
+    </div>
+    <div class="text-end" *ngIf="['view'].includes(screenMode)" style="margin-top: 10px">
+      <button style="margin-right: 5px" mat-raised-button (click)="cancel()">Close</button>
+    </div>
+  </div>
+</div>

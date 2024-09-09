@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <!--
+        JHipster core tables.
+        The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
+    -->
+    <changeSet id="00000000000001" author="jhipster">
+        <createTable tableName="jhi_user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints unique="true" nullable="false" uniqueConstraintName="ux_user_login"/>
+            </column>
+            <column name="password_hash" type="varchar(60)"/>
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+            <column name="email" type="varchar(191)">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
+            </column>
+            <column name="image_url" type="varchar(256)"/>
+            <column name="activated" type="boolean" valueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="lang_key" type="varchar(10)"/>
+            <column name="activation_key" type="varchar(20)"/>
+            <column name="reset_key" type="varchar(20)"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="reset_date" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="department" type="varchar(50)"/>
+        </createTable>
+
+        <createTable tableName="jhi_authority">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="authority_name"
+                                 baseTableName="jhi_user_authority"
+                                 constraintName="fk_authority_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="jhi_authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="jhi_user_authority"
+                                 constraintName="fk_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addNotNullConstraint   columnName="password_hash"
+                                columnDataType="varchar(60)"
+                                tableName="jhi_user"/>
+        <loadData
+                  file="config/liquibase/data/user.csv"
+                  separator=";"
+                  tableName="jhi_user"
+                  usePreparedStatements="true">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+        <dropDefaultValue tableName="jhi_user" columnName="created_date" columnDataType="${datetimeType}"/>
+        <loadData
+                  file="config/liquibase/data/authority.csv"
+                  separator=";"
+                  tableName="jhi_authority"
+                  usePreparedStatements="true">
+            <column name="name" type="string"/>
+        </loadData>
+        <loadData
+                  file="config/liquibase/data/user_authority.csv"
+                  separator=";"
+                  tableName="jhi_user_authority"
+                  usePreparedStatements="true">
+            <column name="user_id" type="numeric"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet author="jhipster" id="00000000000002" context="test">
+        <createTable tableName="jhi_date_time_wrapper">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_date_time_wrapperPK"/>
+            </column>
+            <column name="instant" type="timestamp"/>
+            <column name="local_date_time" type="timestamp"/>
+            <column name="offset_date_time" type="timestamp"/>
+            <column name="zoned_date_time" type="timestamp"/>
+            <column name="local_time" type="time"/>
+            <column name="offset_time" type="time"/>
+            <column name="local_date" type="date"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="jhipster" id="00000000000003" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.SKU (
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            PRODUCT_NAME varchar(30),
+            PRODUCT_CODE varchar(30),
+            PRODUCT_TYPE varchar(30),
+            UNIT_OF_MEASURE varchar(30),
+            PRICE decimal(10,2),
+            QUANTITY decimal(10,2),
+            primary key(Id)
+            );
+
+        </sql>
+    </changeSet>
+    <changeSet author="shubham" id="000000000000027" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table bom (
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            PRODUCT_NAME varchar(100),
+            PRODUCT_CODE varchar(100),
+            PRODUCT_TYPE varchar(100),
+            BOM_LEVEL BIGINT,
+            QUANTITY BIGINT,
+            UNIT_OF_MEASURE varchar(30),
+
+
+            primary key(Id)
+            <!--            FOREIGN KEY (PROD_REF_ID) REFERENCES procure.SKU(ID)-->
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000030" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.bom_skus (
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            bom_id BIGINT ,
+            sku_id BIGINT,
+            quantity DECIMAL(10,3),
+            primary key(ID,bom_id,sku_id)
+            );
+            Alter table procure.bom_skus add constraint bk_key1 foreign key(bom_id) references procure.bom(ID);
+            Alter table procure.bom_skus add constraint bk_key2 foreign key(sku_id) references procure.sku(ID);
+
+        </sql>
+    </changeSet>
+
+
+
+
+    <changeSet author="me" id="00000000000004" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.PRODUCER_DETAILS (
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            PRODUCER_TYPE varchar(50),
+            ADDRESS varchar(100),
+            TALUKA varchar(30),
+            STATE varchar(30),
+            COUNTRY varchar(30),
+            LANDHOLDING decimal(4,2),
+            QUANTITY int ,
+            MOBILE_NUMBER varchar(30),
+            FIELD_OF_PRODUCER_Name varchar(50),
+            CREATED_BY datetime,
+            UPDATED_DATE datetime,
+            UPDATED_BY Datetime,
+            FK_SKU_ID BigInt,
+            primary key(Id)
+            );
+
+        </sql>
+    </changeSet>
+
+    <changeSet author="me" id="00000000000005" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            alter table procure.PRODUCER_DETAILS modify column CREATED_BY  varchar(50),
+            modify column  UPDATED_BY varchar(50) ;
+        </sql>
+    </changeSet>
+
+    <changeSet author="me" id="00000000000006" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            alter table procure.PRODUCER_DETAILS rename column LANDHOLDING to land_holding;
+        </sql>
+    </changeSet>
+
+    <changeSet author="me" id="00000000000007" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            alter table procure.PRODUCER_DETAILS DROP column UPDATED_DATE;
+        </sql>
+    </changeSet>
+
+
+
+    <changeSet author="shubham" id="00000000000008" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            CREATE TABLE procure.ORDERS (
+            ID BIGINT NOT NULL AUTO_INCREMENT,
+            ORDER_NUMBER VARCHAR(60),
+            QUANTITY_REQUIRED DECIMAL(10,2),
+            RATE_PRICE DECIMAL(10,2),
+            STATUS VARCHAR(50),
+            ORDER_DATE DATE,
+            ESTIMATED_DATE DATE,
+            FK_SKU_ID BIGINT,
+            PRIMARY KEY (ID),
+            FOREIGN KEY (FK_SKU_ID) REFERENCES procure.SKU(ID)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="00000000000009" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            CREATE TABLE procure.Entitlements (
+            ID BIGINT NOT NULL AUTO_INCREMENT,
+            ROLE_ID varchar(60),
+            RESOURCE_ID varchar(60),
+            RESOURCE_NAME varchar(60),
+            ACTION_ID varchar(60),
+            ACTION_NAME varchar(60),
+            PRIMARY KEY (ID)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="me" id="000000000000010" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.Supplier_Details (
+            ID BIGINT NOT NULL AUTO_INCREMENT,
+            FK_ORDER_ID BIGINT,
+            SUPPLIER_TYPE varchar(50),
+            FIRST_NAME varchar(50),
+            LAST_NAME varchar(50),
+            EMAIL_ID varchar(50),
+            ADDRESS varchar(50),
+            MOBILE_NUMBER varchar(50),
+            GST_NUMBER  varchar(50),
+            TOTAL_LAND_HOLDING decimal(5,2),
+            QUANTITY_SUPPLIED decimal(5,2),
+            QUANTITY_REJECTED decimal(5,2),
+            WEIGHTED_AVERAGE decimal(5,2),
+            TRANSPORTATION_COST decimal(8,3),
+            SUPPLIER_RATE_PRICE decimal(9,3),
+            QUANTITY_RECEIVED decimal(5,2),
+            ACCEPTED_QUANTITY decimal(5,2),
+            REJECTED_QUANTITY decimal(5,2),
+            STATUS varchar(20),
+            REMARK varchar(20),
+            primary key(ID)
+            );
+<!--            ALTER TABLE procure.orders ADD CONSTRAINT constraint_name1 UNIQUE (ORDER_NUMBER);-->
+          Alter table procure.supplier_details add constraint foreign_key1 foreign key(FK_ORDER_ID) references procure.orders(ID);
+        </sql>
+    </changeSet>
+
+
+  <changeSet author="shubham" id="000000000000014" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.Order_Assignment (
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            ORDER_NUMBER varchar(60) ,
+            FK_USER_ID BIGINT ,
+            STATUS varchar(50),
+            UPDATED_BY varchar(50),
+            ASSIGNED_QUANTITY decimal(10,2),
+            BID_RATE decimal(10,2),
+            PURCHASE_PRICE decimal(10,2),
+            PURCHASE_QUANTITY decimal(10,2),
+            CREATED_BY varchar(50),
+            CREATED_DATE varchar(50),
+            ASSIGNED_BY BIGINT,
+            primary key(ID)
+            );
+            Alter table procure.Order_Assignment add constraint fk_key1 foreign key(ASSIGNED_BY) references procure.jhi_user(id);
+            Alter table procure.Order_Assignment add constraint fk_key4 foreign key(FK_USER_ID) references procure.jhi_user(id);
+            ALTER TABLE procure.orders ADD CONSTRAINT constraint_name UNIQUE (ORDER_NUMBER);
+            Alter table procure.Order_Assignment add constraint fk_key5 foreign key(ORDER_NUMBER) references procure.orders(ORDER_NUMBER);
+        </sql>
+    </changeSet>
+    <changeSet author="jhipster" id="000000000000015" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.department (
+            department_id BIGINT  NOT NULL AUTO_INCREMENT,
+            department_code varchar(30),
+            department_name varchar(30),
+            primary key(department_id)
+            );
+
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shiv" id="000000000000016" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+                drop table procure.supplier_details;
+                create table procure.Supplier_Details (
+                                                          ID BIGINT NOT NULL AUTO_INCREMENT,
+                                                          order_number varchar(100),
+                                                          SUPPLIER_TYPE varchar(100),
+                                                          FIRST_NAME varchar(100),
+                                                          LAST_NAME varchar(100),
+                                                          EMAIL_ID varchar(100),
+                                                          ADDRESS varchar(200),
+                                                          MOBILE_NUMBER varchar(50),
+                                                          GST_NUMBER  varchar(50),
+                                                          TOTAL_LAND_HOLDING decimal(5,2),
+                                                          QUANTITY_SUPPLIED decimal(5,2),
+                                                          QUANTITY_REJECTED decimal(5,2),
+                                                          WEIGHTED_AVERAGE decimal(5,2),
+                                                          TRANSPORTATION_COST decimal(8,3),
+                                                          SUPPLIER_RATE_PRICE decimal(9,3),
+                                                          QUANTITY_RECEIVED decimal(5,2),
+                                                          ACCEPTED_QUANTITY decimal(5,2),
+                                                          REJECTED_QUANTITY decimal(5,2),
+                                                          STATUS varchar(20),
+                                                          REMARK varchar(20),
+                                                          primary key(ID)
+                );
+        </sql>
+    </changeSet>
+    <changeSet author="Shiv" id="000000000000018" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            drop table procure.supplier_details;
+            create table procure.Supplier_Details (
+                                                      ID BIGINT NOT NULL AUTO_INCREMENT,
+                                                      ORDER_NUMBER varchar(50),
+                                                      FK_ORDER_ID BIGINT,
+                                                      SUPPLIER_TYPE varchar(50),
+                                                      FIRST_NAME varchar(50),
+                                                      LAST_NAME varchar(50),
+                                                      EMAIL_ID varchar(50),
+                                                      ADDRESS varchar(300),
+                                                      MOBILE_NUMBER varchar(50),
+                                                      GST_NUMBER  varchar(50),
+                                                      TOTAL_LAND_HOLDING decimal(5,2),
+                                                      QUANTITY_SUPPLIED decimal(5,2),
+                                                      WEIGHTED_AVERAGE decimal(5,2),
+                                                      primary key(ID)
+            );
+            <!--            ALTER TABLE procure.orders ADD CONSTRAINT constraint_name1 UNIQUE (ORDER_NUMBER);-->
+            Alter table procure.supplier_details add constraint foreign_key1 foreign key(FK_ORDER_ID) references procure.orders(ID);
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shiv" id="000000000000019" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            ALTER TABLE procure.supplier_details DROP CONSTRAINT foreign_key1;
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shiv" id="000000000000020" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table PROCURE.SUPPLIER_PURCHASE_ORDER (
+                                                      ID BIGINT NOT NULL AUTO_INCREMENT,
+                                                      ORDER_NUMBER varchar(50),
+                                                      FK_ORDER_ID BIGINT,
+                                                      FK_SUPPLIER_ID BIGINT,
+                                                      QUANTITY_SUPPLIED decimal(5,2),
+                                                      QUANTITY_REJECTED decimal(5,2),
+                                                      WEIGHTED_AVERAGE decimal(5,2),
+                                                      TRANSPORTATION_COST decimal(8,3),
+                                                      SUPPLIER_RATE_PRICE decimal(9,3),
+                                                      QUANTITY_RECEIVED decimal(5,2),
+                                                      ACCEPTED_QUANTITY decimal(5,2),
+                                                      REJECTED_QUANTITY decimal(5,2),
+                                                      STATUS varchar(20),
+                                                      REMARK varchar(300),
+                                                      primary key(ID)
+            );
+            Alter table PROCURE.SUPPLIER_PURCHASE_ORDER add constraint foreign_supplier_key1 foreign key(FK_SUPPLIER_ID) references procure.Supplier_Details(ID);
+        </sql>
+    </changeSet>
+
+
+
+
+
+    <changeSet author="Shubham" id="000000000000021" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create VIEW VIEW_ORDERS_SUMMARY as select orders.ID as Id, orders.order_date as effective_date,
+            orders.status as order_status, orders.order_number as order_number,
+            sku.product_type as product_type, sku.product_name as product_name from sku Inner join orders on sku.ID = orders.FK_SKU_ID;
+
+        </sql>
+    </changeSet>
+
+
+
+
+    <changeSet author="Shubham" id="000000000000021" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create VIEW VIEW_ORDERS_SUMMARY as select orders.ID as Id, orders.order_date as effective_date,
+            orders.status as order_status, orders.order_number as order_number,
+            sku.product_type as product_type, sku.product_name as product_name from sku Inner join orders on sku.ID = orders.FK_SKU_ID;
+
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shubham" id="000000000000023" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            Alter table order_assignment rename column ORDER_NUMBER to FK_ORDER_NUMBER
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shubham" id="000000000000024" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+           Alter table order_assignment drop constraint fk_key5;
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shubham" id="000000000000025" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            Alter table procure.Order_Assignment add constraint fk_key5 foreign key(FK_ORDER_NUMBER) references procure.orders(ORDER_NUMBER);
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shubham" id="000000000000026" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            CREATE VIEW order_assignment_view AS
+            select id as ID, fk_order_number,fk_user_id,status,updated_by,assigned_quantity,bid_rate,purchase_price,purchase_quantity,created_by,created_date,assigned_by from order_assignment ;
+
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000028" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table batch (
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            BATCH_SIZE varchar(30),
+            primary key(Id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000033" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table procure.production(
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            BATCH_NUMBER varchar(100),
+            BOM_ID BIGINT,
+            BATCH_SIZE BIGINT,
+            CREATED_DATE datetime,
+            CREATED_BY varchar(60),
+            UPDATED_BY varchar(60),
+            UPDATED_DATE datetime,
+            primary key(Id)
+            );
+            Alter table procure.production add constraint prod_key_1 foreign key(BOM_ID) references procure.bom(id)
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shubham" id="000000000000034" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            CREATE  VIEW procure.vw_production_report
+            AS select
+            pd.BATCH_NUMBER,pd.BATCH_SIZE, bm.ID AS BOM_ID,bm.PRODUCT_NAME
+            AS ITEM_NAME,bm.PRODUCT_CODE AS item_code,bm.UNIT_OF_MEASURE
+            AS ITEM_UOM,
+            sk.ID,sk.PRODUCT_NAME ,sk.PRODUCT_CODE ,sk.PRODUCT_TYPE,
+            sk.UNIT_OF_MEASURE , sk.PRICE ,bsku.QUANTITY,
+            ((pd.BATCH_SIZE * bsku.quantity) / 100) calculated_qty ,
+            pd.CREATED_DATE, pd.CREATED_BY
+            from procure.bom_skus bsku
+            inner join procure.sku sk on sk.ID = bsku.sku_id
+            inner join procure.bom bm on bsku.bom_id = bm.ID
+            inner join procure.production pd on bsku.bom_id=pd.BOM_ID
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000035" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table customer_details(
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            FIRST_NAME varchar(50),
+            LAST_NAME varchar(50),
+            COMPANY_NAME varchar(100),
+            ADDRESS varchar(300),
+            ADDRESS_LINE_1 varchar(300),
+            ADDRESS_LINE_2 varchar(300),
+            CITY varchar(50),
+            PIN varchar(50),
+            STATE varchar(50),
+            COUNTRY varchar(50),
+            E_MAIL varchar(50),
+            MOBILE_NO varchar(50),
+            GST_NO varchar(50),
+            LEAD_SOURCE varchar(50),
+            primary key(Id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000036" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table city(
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            CITY_CODE varchar (100),
+            CITY_NAME varchar (100),
+            primary key(ID)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000037" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table state(
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            STATE_CODE varchar (100),
+            STATE_NAME varchar (100),
+            primary key(ID)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000038" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table country(
+            ID BIGINT  NOT NULL AUTO_INCREMENT,
+            COUNTRY_CODE varchar (100),
+            COUNTRY_NAME varchar (100),
+            primary key(ID)
+            );
+        </sql>
+    </changeSet>
+
+
+    <changeSet author="shubham" id="000000000000040" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table lead_source_type(
+            ID BIGINT NOT NULL AUTO_INCREMENT,
+            CREATED_DATE Date,
+            SOURCE_TYPE varchar(100),
+            DESCRIPTION varchar(200),
+            STATUS varchar(200),
+            primary key(ID)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000042" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            Alter table lead_source_type modify column STATUS TINYINT(1);
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000041" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            create table sales_order(
+            ID BIGINT NOT NULL AUTO_INCREMENT,
+            SALES_ORDER_NUMBER varchar(100),
+            CUSTOMER_NAME varchar(100),
+            ITEM_NAME varchar(50),
+            DELIVERY_DATE date,
+            STATUS varchar(50),
+            ORDER_QUANTITY decimal(10,2),
+            CREATED_DATE date,
+            CREATED_BY varchar(50),
+            UPDATED_DATE date,
+            UPDATED_BY varchar(50),
+            primary key(ID)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000043" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+         Alter table customer_details ADD CONSTRAINT uq_customer_details UNIQUE(E_MAIL,MOBILE_NO);
+        </sql>
+    </changeSet>
+
+    <changeSet author="shubham" id="000000000000044" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            ALTER TABLE city ADD COLUMN STATE_CODE BIGINT;
+            ALTER TABLE state ADD COLUMN COUNTRY_CODE BIGINT;
+
+            ALTER TABLE city ADD CONSTRAINT fk_city_state FOREIGN KEY (STATE_CODE) REFERENCES state(ID);
+            ALTER TABLE state ADD CONSTRAINT fk_state_country FOREIGN KEY (COUNTRY_CODE) REFERENCES country(ID);
+        </sql>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>
+
+

@@ -1,0 +1,245 @@
+<div class="d-flex justify-content-center">
+  <div class="col-10">
+    <h2>Order Purchase</h2>
+    <br />
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <label class="col-2">Order Number :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData['orderNumber'] }}</label>
+          <label class="col-2">Item Name :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData.order.sku.productName }}</label>
+          <label class="col-2">Status :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData.order.status }}</label>
+        </div>
+        <br />
+        <div class="row">
+          <label class="col-2">Quantity Required :</label>
+          <label class="col-2 orderFieldVal">{{ quantityRequired }}</label>
+          <label class="col-2">RatePrice :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData.order.ratePrice }}</label>
+          <label class="col-2">Estimated Date :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData.order.estimatedDate }}</label>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<br />
+<div class="d-flex justify-content-center">
+  <div class="col-10">
+    <mat-card>
+      <mat-card-content>
+        <div class="d-flex justify-content-center">
+          <form name="editForm" role="form" [formGroup]="editForm">
+            <h4 id="myUserLabel">Add Supplier Details</h4>
+
+            <jhi-alert-error></jhi-alert-error>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Supplier"
+                    name="suppliers"
+                    (selectionChange)="supplierChanged($event.value)"
+                    formControlName="suppliers"
+                  >
+                    <mat-option *ngFor="let supplier of suppliers" [value]="supplier"
+                      >{{ supplier.firstName }} {{ supplier.lastName }}</mat-option
+                    >
+                  </mat-select>
+                  <mat-error *ngIf="editForm?.get('suppliers')?.errors?.required">Supplier Type is required. </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-select placeholder="Supplier Type" name="supplierType" formControlName="supplierType">
+                    <mat-option *ngFor="let type of supplierTypes" [value]="type">{{ type }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="editForm?.get('supplierType')?.errors?.required">Supplier Type is required. </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="First Name" name="firstName" formControlName="firstName" />
+                  <mat-error *ngIf="editForm.get('firstName')?.hasError('required')">This field is required.</mat-error>
+                  <mat-error *ngIf="editForm.get('firstName')?.hasError('maxlength')"
+                    >This field cannot be longer than 60 characters.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput name="lastName" placeholder="Last Name" formControlName="lastName" />
+                  <mat-error *ngIf="editForm.get('lastName')?.hasError('required')">This field is required.</mat-error>
+                  <mat-error *ngIf="editForm.get('lastName')?.hasError('maxlength')"
+                    >This field cannot be longer than 60 characters.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput name="emailId" placeholder="Email ID" formControlName="emailId" />
+                  <mat-error *ngIf="editForm.get('emailId')?.hasError('required')">This field is required.</mat-error>
+                  <mat-error *ngIf="editForm.get('emailId')?.hasError('email')">Please enter a valid email address. </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput name="address" placeholder="Address" formControlName="address" />
+                  <mat-error *ngIf="editForm.get('address')?.hasError('required')">This field is required.</mat-error>
+                  <mat-error *ngIf="editForm.get('address')?.hasError('maxlength')"
+                    >This field cannot be longer than 100 characters.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput id="mobileNumber" name="mobileNumber" placeholder="Mobile Number" formControlName="mobileNumber" />
+                  <mat-error *ngIf="editForm.get('mobileNumber')?.hasError('required')">This field is required. </mat-error>
+                  <mat-error *ngIf="editForm.get('mobileNumber')?.hasError('pattern')"
+                    >Please enter a valid 10-digit mobile number.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6" *ngIf="this.editForm.get('supplierType')?.value === 'Trader'">
+                <mat-form-field>
+                  <input matInput name="gstNumber" placeholder="GST Number" formControlName="gstNumber" />
+                </mat-form-field>
+                <div *ngIf="editForm.get('gstNumber')?.invalid && (editForm.get('gstNumber')?.dirty || editForm.get('gstNumber')?.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get('gstNumber')?.hasError('pattern')"
+                    >Please enter a valid GST number.</small
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6" *ngIf="this.editForm.get('supplierType')?.value === 'Farmer'">
+                <mat-form-field>
+                  <input matInput name="totalLandHolding" placeholder="Total Land Holding" formControlName="totalLandHolding" />
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    editForm.get('totalLandHolding')?.invalid &&
+                    (editForm.get('totalLandHolding')?.dirty || editForm.get('totalLandHolding')?.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('totalLandHolding')?.hasError('pattern')"
+                    >Please enter a valid number</small
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput name="quantitySupplied" placeholder="Quantity Supplied" formControlName="quantitySupplied" numbersOnly />
+                  <mat-error *ngIf="editForm.get('quantitySupplied')?.hasError('required')">This field is required.</mat-error>
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    editForm.get('quantitySupplied')?.invalid &&
+                    (editForm.get('quantitySupplied')?.dirty || editForm.get('quantitySupplied')?.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('quantitySupplied')?.hasError('min')">cannot be negative</small>
+                  <small class="form-text text-danger" *ngIf="editForm.get('quantitySupplied')?.hasError('pattern')"
+                    >Please enter a valid number</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput name="supplierRatePrice" placeholder="RatePrice" formControlName="supplierRatePrice" />
+                  <mat-error *ngIf="editForm.get('supplierRatePrice')?.hasError('required')">This field is required.</mat-error>
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    editForm.get('supplierRatePrice')!.invalid &&
+                    (editForm.get('supplierRatePrice')!.dirty || editForm.get('supplierRatePrice')!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('supplierRatePrice')?.hasError('min')"
+                    >Value must be non-negative.</small
+                  >
+                  <small class="form-text text-danger" *ngIf="editForm.get('supplierRatePrice')?.hasError('pattern')"
+                    >Please enter a valid integer value.</small
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput name="transportationCost" placeholder="Transportation Cost" formControlName="transportationCost" />
+                  <mat-error *ngIf="editForm.get('transportationCost')?.hasError('required')">This field is required.</mat-error>
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    editForm.get('transportationCost')!.invalid &&
+                    (editForm.get('transportationCost')!.dirty || editForm.get('transportationCost')!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('transportationCost')?.hasError('min')"
+                    >Value must be non-negative.</small
+                  >
+                  <small class="form-text text-danger" *ngIf="editForm.get('transportationCost')?.hasError('pattern')"
+                    >Please enter a valid integer value.</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-10">
+                <mat-form-field>
+                  <textarea
+                    matInput
+                    name="remark"
+                    placeholder="Remark"
+                    formControlName="remark"
+                    class="border border-dark"
+                    rows="4"
+                  ></textarea>
+                </mat-form-field>
+                <div *ngIf="editForm.get('remark')!.invalid && (editForm.get('remark')!.dirty || editForm.get('remark')!.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get('remark')?.hasError('pattern')"></small>
+                </div>
+              </div>
+            </div>
+
+            <button *ngIf="!isViewMode()" type="button" class="btn btn-secondary" (click)="previousState()">
+              <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+            </button>
+
+            <button type="submit" *ngIf="!isViewMode()" (click)="save()" class="btn btn-primary">
+              <fa-icon icon="save"></fa-icon>
+              &nbsp;<span>Save</span>
+            </button>
+
+            <button type="submit" *ngIf="isViewMode()" (click)="previousState()" class="btn btn-info">
+              <fa-icon icon="arrow-left"></fa-icon>
+              &nbsp;<span>Back</span>
+            </button>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

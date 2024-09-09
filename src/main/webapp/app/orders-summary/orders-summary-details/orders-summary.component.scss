@@ -1,0 +1,155 @@
+.btn {
+  margin-top: 12px;
+  margin-left: -21px;
+  border: none;
+}
+.action-button1 {
+  background-color: #f2f2f2;
+  margin-left: 5px;
+  color: black;
+}
+.top-right-corner {
+  position: relative;
+  top: -9px;
+  margin-left: 0px;
+  display: flex;
+  align-items: center;
+
+  .top-right-corner input {
+    margin-right: 8px;
+  }
+  .inputType {
+    margin-left: 2px;
+  }
+  .action-button {
+    margin-left: 8px;
+  }
+}
+button {
+  background-color: #013b62;
+  color: #fff;
+  margin-right: 3px;
+}
+.mat-tab-label {
+  color: #333;
+}
+li {
+  font-size: 15px;
+  font-family: auto;
+  list-style-type: none;
+}
+.top-right-corner label {
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 119px;
+}
+.summary_title {
+  font-size: 24px;
+  font-weight: 500;
+  font-family: system-ui;
+}
+.scrollbar {
+  height: 75.5vh !important;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 48px !important;
+}
+.scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 5px rgb(0183, 174, 174) !important;
+  border-radius: 10px;
+  background-color: #e4e5e6;
+}
+
+// ::ng-deep .mat-tab-label {
+//   margin: 3px !important;
+//   width: 112px !important;
+//   min-width: 5px !important;
+// }
+
+::ng-deep .customTabGroup {
+  .mat-tab-label {
+    margin: 0px !important;
+    width: 19% !important;
+    min-width: 52px !important;
+    font-size: smaller;
+    padding: 0 0px !important;
+  }
+}
+
+:host ::ng-deep .mat-tab-group-dynamic-height .mat-tab-body-content {
+  padding-top: 0px;
+  overflow: auto;
+}
+.position {
+  margin-left: 50px;
+}
+h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 31px;
+}
+.panelData1 span {
+  font-size: 14px;
+  font-weight: 500;
+}
+.panelData1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-side {
+  text-align: left;
+}
+.right-side {
+  margin-right: 9px;
+}
+strong {
+  font-weight: bold;
+}
+
+.lineColor {
+  border-left: 5px solid red;
+}
+
+.inProgressColor {
+  background-color: #fdedb5;
+}
+
+.clickedCardColor {
+  background-color: #e4e5e6 !important;
+  color: black;
+}
+.clickedCardColor:hover {
+  background-color: #00bfff !important;
+  color: white;
+}
+.buttonPaginationBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0rem 0rem 0rem;
+}
+.disableButton {
+  .disable-print:hover {
+    cursor: not-allowed;
+  }
+}
+.panelData1 label {
+  font-size: 14px;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .top-right-corner label {
+    margin-left: 12px;
+  }
+}

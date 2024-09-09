@@ -1,0 +1,78 @@
+[
+  {
+    "productName": "pav bhaji",
+    "productType": "Food",
+    "productCode": "2313",
+    "unitOfMeasure": "NOS",
+    "price": 40,
+    "qty": 2,
+    "id": 6,
+    "products": [
+      {
+        "id": 5,
+        "itemName": "Tomato",
+        "qty": 4,
+        "uom": "KG",
+        "rate": 30,
+        "amount": 100,
+        "bomLabel": "string"
+      },
+      {
+        "id": 4,
+        "itemName": "Chili Pepper",
+        "qty": 4,
+        "uom": "KG",
+        "rate": 30,
+        "amount": 100,
+        "bomLabel": "string"
+      },
+      {
+        "id": 3,
+        "itemName": "Butter",
+        "qty": 3,
+        "uom": "KG",
+        "rate": 20,
+        "amount": 100,
+        "bomLabel": "string"
+      }
+    ]
+  },
+  {
+    "productName": "Pen",
+    "productType": "Stationary",
+    "productCode": "1223",
+    "unitOfMeasure": "NOS",
+    "price": 40,
+    "qty": 2,
+    "id": 6,
+    "products": [
+      {
+        "id": 5,
+        "itemName": "Ink",
+        "qty": 4,
+        "uom": "KG",
+        "rate": 30,
+        "amount": 100,
+        "bomLabel": "string"
+      },
+      {
+        "id": 4,
+        "itemName": "Rubber",
+        "qty": 4,
+        "uom": "NOs",
+        "rate": 30,
+        "amount": 100,
+        "bomLabel": "string"
+      },
+      {
+        "id": 3,
+        "itemName": "Plastic",
+        "qty": 3,
+        "uom": "NOs",
+        "rate": 20,
+        "amount": 100,
+        "bomLabel": "string"
+      }
+    ]
+  }
+]

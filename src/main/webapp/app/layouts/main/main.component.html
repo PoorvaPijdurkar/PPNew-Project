@@ -1,0 +1,166 @@
+<div>
+  <router-outlet name="navbar"></router-outlet>
+</div>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav class="sidenav" [mode]="'side'" [opened]="sidenavOpened" style="background-color: #00485e; width: 59px">
+    <mat-nav-list class="custom-sidenav-list" style="margin-top: -17px">
+      <mat-list-item
+        (click)="selectRoute('/')"
+        routerLink="/"
+        [style.border-left]="selectedRoute === '/' ? '3px solid white' : '3px solid transparent'"
+        style="margin-left: -4px"
+      >
+        <mat-icon
+          mat-list-icon
+          class="home-icon"
+          style="border-radius: 4px"
+          [style.color]="selectedRoute === '/' ? 'black' : 'white'"
+          [style.backgroundColor]="selectedRoute === '/' ? 'white' : ''"
+          >home</mat-icon
+        >
+      </mat-list-item>
+
+      <mat-list
+        *ngIf="accountService.isAuthenticated()"
+        style="margin-top: -12px; margin-left: -4px"
+        [style.border-left]="selectedRoute === '/sku' ? '3px solid white' : '3px solid transparent'"
+      >
+        <mat-list-item (click)="selectRoute('/sku')">
+          <div mat-menu-trigger [matMenuTriggerFor]="entitiesMenu" style="cursor: pointer">
+            <mat-icon
+              mat-list-icon
+              class="list-icon"
+              style="border-radius: 4px"
+              [style.color]="selectedRoute === '/sku' ? 'black' : 'white'"
+              [style.backgroundColor]="selectedRoute === '/sku' ? 'white' : ''"
+              >list</mat-icon
+            >
+          </div>
+          <mat-menu #entitiesMenu="matMenu">
+            <button mat-menu-item routerLink="sku" style="color: white">
+              <fa-icon [icon]="['fas', 'table-list']" class="mr-2"></fa-icon> Sku
+            </button>
+            <button mat-menu-item routerLink="department" style="color: white">
+              <fa-icon [icon]="faBuilding" class="mr-2"></fa-icon> Department
+            </button>
+            <button mat-menu-item routerLink="supplier" style="color: white">
+              <fa-icon [icon]="faTruck" class="mr-2"></fa-icon> Supplier
+            </button>
+            <button mat-menu-item routerLink="dashboard" style="color: white">
+              <fa-icon [icon]="['fas', 'tachometer-alt']" class="mr-2"></fa-icon> Dashboard
+            </button>
+            <button mat-menu-item routerLink="summary" style="color: white">
+              <fa-icon [icon]="['fas', 'book']" class="mr-2"></fa-icon> Summary
+            </button>
+          </mat-menu>
+        </mat-list-item>
+      </mat-list>
+
+      <mat-list-item
+        *ngIf="accountService.isAuthenticated()"
+        style="margin-top: -9px; margin-left: -4px"
+        (click)="selectRoute('/order')"
+        [style.border-left]="selectedRoute === '/order' ? '3px solid white' : '3px solid transparent'"
+      >
+        <div mat-menu-trigger [matMenuTriggerFor]="prodMenu" style="cursor: pointer">
+          <mat-icon
+            mat-list-icon
+            class=""
+            style="border-radius: 4px"
+            [style.color]="selectedRoute === '/order' ? 'black' : 'white'"
+            [style.backgroundColor]="selectedRoute === '/order' ? 'white' : ''"
+            >shopping_cart</mat-icon
+          >
+        </div>
+        <mat-menu #prodMenu="matMenu">
+          <button mat-menu-item routerLink="order" style="color: white">
+            <fa-icon [icon]="faShoppingCart" class="mr-2"></fa-icon> Order
+          </button>
+          <button mat-menu-item routerLink="orderAssignment" style="color: white">
+            <fa-icon [icon]="faShoppingCart" class="mr-2"></fa-icon> Order Assignment
+          </button>
+          <button mat-menu-item routerLink="orderPurchase" style="color: white">
+            <fa-icon [icon]="faShoppingCart" class="mr-2"></fa-icon> Order Purchased
+          </button>
+          <button mat-menu-item routerLink="bom" style="color: white">
+            <mat-icon class="text-white" style="font-size: 19px; margin-right: 0px">category</mat-icon>BOM
+          </button>
+          <button mat-menu-item routerLink="production" style="color: white">
+            <fa-icon [icon]="faBuilding" class="mr-2"></fa-icon> Production
+          </button>
+        </mat-menu>
+      </mat-list-item>
+
+      <mat-list
+        *ngIf="accountService.isAuthenticated()"
+        style="margin-top: -12px; margin-left: -4px"
+        [style.border-left]="selectedRoute === '/sku' ? '3px solid white' : '3px solid transparent'"
+      >
+        <mat-list-item (click)="selectRoute('/customer')">
+          <div mat-menu-trigger [matMenuTriggerFor]="entitiesMenu" style="cursor: pointer">
+            <mat-icon
+              mat-list-icon
+              class="list-icon"
+              style="border-radius: 4px"
+              [style.color]="selectedRoute === '/customer' ? 'black' : 'white'"
+              [style.backgroundColor]="selectedRoute === '/customer' ? 'white' : ''"
+              >group</mat-icon
+            >
+          </div>
+          <mat-menu #entitiesMenu="matMenu">
+            <button mat-menu-item routerLink="customer" style="color: white">
+              <fa-icon [icon]="['fas', 'user']" class="mr-2"></fa-icon> Customer
+            </button>
+            <button mat-menu-item routerLink="lead-source" style="color: white">
+              <fa-icon [icon]="['fas', 'tasks']" class="mr-2"></fa-icon> Lead Source
+            </button>
+            <button mat-menu-item routerLink="sales-order" style="color: white">
+              <fa-icon [icon]="faShoppingCart" class="mr-2"></fa-icon> Sales Order
+            </button>
+          </mat-menu>
+        </mat-list-item>
+      </mat-list>
+
+      <mat-list-item
+        *jhiHasAnyAuthority="['ROLE_ADMIN']"
+        (click)="selectRoute('/admin/user-management')"
+        [style.border-left]="selectedRoute === '/admin/user-management' ? '3px solid white' : '3px solid transparent'"
+        style="margin-left: -4px"
+      >
+        <div mat-menu-trigger [matMenuTriggerFor]="adminMenu" style="cursor: pointer">
+          <mat-icon
+            mat-list-icon
+            class=""
+            style="border-radius: 4px"
+            [style.color]="selectedRoute === '/admin/user-management' ? 'black' : 'white'"
+            [style.backgroundColor]="selectedRoute === '/admin/user-management' ? 'white' : ''"
+            >assignment_ind</mat-icon
+          >
+        </div>
+        <mat-menu #adminMenu="matMenu">
+          <button
+            mat-menu-item
+            *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])"
+            routerLink="admin/user-management"
+            style="color: white"
+          >
+            <fa-icon [icon]="['fas', 'users']" class="mr-2"></fa-icon> User management
+          </button>
+          <button mat-menu-item *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])" routerLink="admin/docs" style="color: white">
+            <fa-icon [icon]="['fas', 'book']" class="mr-2"></fa-icon> API
+          </button>
+        </mat-menu>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <jhi-page-ribbon></jhi-page-ribbon>
+    <div class="container-fluid sidenav-Footer">
+      <div class="card jh-card">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<jhi-footer></jhi-footer>

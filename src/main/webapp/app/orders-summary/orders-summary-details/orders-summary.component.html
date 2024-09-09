@@ -1,0 +1,78 @@
+<div class="top-right-corner">
+  <h3 class="summary_title">Orders Summary</h3>
+  <div>
+    <label>Date </label>
+    <input placeholder="{{ getTodayDate() }} - {{ getTodayDate() }}" type="text" [alwaysShowCalendars]="true"
+      [linkedCalendars]="true" ngxDaterangepickerMd [(ngModel)]="selected" [ranges]="ranges" class="inputType" />
+  </div>
+  <button mat-button class="action-button" (click)="applyDateRange()">APPLY</button>
+  <button mat-button class="action-button1" (click)="resetDateRange()">RESET</button>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <mat-tab-group class="customTabGroup" (selectedTabChange)="statusTabChange($event)"
+      [selectedIndex]="selectedTabIndex">
+      <mat-tab *ngFor="let tab of tabsData; let index = index">
+        <ng-template mat-tab-label>
+          <label style="cursor: pointer" [matTooltip]="tab.label" matTooltipPosition="above">
+            <mat-icon matBadge="{{ tab.count.curr }}" matBadgePosition="below after" matBadgeColor="warn"
+              matBadgeSize="medium" style="font-size: 23px; vertical-align: middle" [ngStyle]="{ color: tab.color }">
+              {{ tab.icon }}
+            </mat-icon>
+          </label>
+        </ng-template>
+        <div class="scrollbar">
+          <div *ngFor="let data of panelData; let filterIndex = index">
+            <mat-card [ngClass]="{
+                lineColor: ['REJECTED'].includes(data.orderStatus),
+                inProgressColor: ['WAITING FOR APPROVAL'].includes(data.fileProcessingStatus),
+                clickedCardColor: data.id === currentSelectedCard?.id
+              }" class="cursor-pointer">
+              <div class="remove-space" style="font-size: 13px" (click)="passDataToChild(data)">
+                <div style="display: flex">
+                  <strong>{{ data.orderNumber }}</strong>
+                  <div class="position">{{ data.effectiveDate }}</div>
+                </div>
+                <div>
+                  {{ data.productName }} <br />
+                  {{ data.productType }}
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="buttonPaginationBlock" *ngIf="showDateList()">
+      <button mat-button="primary" style="color: white; background-color: darkgray" (click)="goToPreviousPage()"
+        [ngClass]="{ disabledButton: currentPage === 0 }" [disabled]="currentPage === 0">
+        Prev
+      </button>
+      <div>{{ totalPages ? currentPage + 1 : currentPage }} of {{ totalPages }}</div>
+      <button mat-button="primary" style="color: white; background-color: darkgray" (click)="goToNextPage()"
+        [disabled]="totalPages ? currentPage + 1 >= totalPages : currentPage >= totalPages">
+        Next
+      </button>
+    </div>
+  </div>
+
+  <div class="col-sm-9">
+    <mat-card style="margin-bottom: 12px">
+      <div class="panelData1">
+        <div class="left-side">
+          <label>Order Number: </label><span style="margin-left: 10px">{{ currentSelectedCard?.orderNumber
+            }}</span><br />
+          <label>Status: </label><span style="margin-left: 59px"> {{ currentSelectedCard?.orderStatus }}</span>
+        </div>
+        <div class="right-side">
+          <label>Received Date: </label> <span></span><br />
+          <label>Effective Date : </label><span style="margin-left: 5px"> {{ currentSelectedCard?.effectiveDate
+            }}</span>
+        </div>
+      </div>
+    </mat-card>
+    <jhi-order-deatils [currentSelectedCard]="currentSelectedCard"></jhi-order-deatils>
+  </div>
+</div>

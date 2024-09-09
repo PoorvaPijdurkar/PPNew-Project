@@ -1,0 +1,139 @@
+<div *ngIf="screenMode === 'add'" class="d-flex justify-content-center">
+  <div class="col-10">
+    <div class="text">
+      <h2 id="myUserLabel">Production Planner</h2>
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <div>
+          <form [formGroup]="editForm">
+            <div class="row">
+              <mat-form-field class="col-3">
+                <mat-label>Item Name</mat-label>
+                <mat-select placeholder="Select Item Name" formControlName="productName">
+                  <mat-option *ngFor="let product of bomData" [value]="product">{{ product.productName }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    editForm.get('productName')!.invalid && (editForm.get('productName')!.dirty || editForm.get('productName')!.touched)
+                  "
+                >
+                  <span *ngIf="editForm.get('productName')?.errors?.required">Item Name is Mandatory</span>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="col-3">
+                <mat-label>Batch Size</mat-label>
+                <input placeholder="Batch Size" matInput formControlName="batchSize" numbersOnly />
+                <mat-error
+                  *ngIf="editForm.get('batchSize')!.invalid && (editForm.get('batchSize')!.dirty || editForm.get('batchSize')!.touched)"
+                >
+                  <span *ngIf="editForm.get('batchSize')?.errors?.required">Batch Size is Mandatory</span>
+                  <span *ngIf="editForm.get('batchSize')?.hasError('min')">Batch Size should be greater than zero</span>
+                </mat-error>
+              </mat-form-field>
+
+              <div class="col-2 text-end" style="margin-top: 3px">
+                <button mat-raised-button class="btn-primary" type="button" (click)="calculate()">Calculate</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <mat-divider></mat-divider>
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Table Columns -->
+          <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef>No. </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.position }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef>Product Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.productName }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.quantity }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="calculatedQty">
+            <mat-header-cell *matHeaderCellDef>Calculated Quantity</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.calculatedQty }}</mat-cell>
+            <mat-footer-cell *matFooterCellDef>Total : {{ totalBatchSize }}</mat-footer-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-footer-row *matFooterRowDef="displayedColumns"> </mat-footer-row>
+        </mat-table>
+      </mat-card-content>
+      <div></div>
+    </mat-card>
+    <div class="text-end" style="margin-top: 10px">
+      <button style="margin-right: 5px" mat-raised-button class="btn-primary" (click)="save()">Save</button>
+      <button style="margin-right: 5px" mat-raised-button (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="screenMode === 'view'" class="d-flex justify-content-center">
+  <div class="col-10">
+    <div class="text">
+      <h2 id="myUserLabel">Production Planner</h2>
+      <div style="display: flex; justify-content: flex-end">
+        <button type="submit" style="margin-right: 5px" (click)="previousState()" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>
+          &nbsp;<span>Back</span>
+        </button>
+        <button mat-raised-button class="btn-primary" (click)="generateProductionReport(rowData.batchNumber)">Print</button>
+      </div>
+    </div>
+    <br />
+    <div class="view-Label">
+      <div class="d-flex lh-2 mb-2">
+        <h2>Batch Sheet ({{ reportData.itemName }})</h2>
+      </div>
+      <div class="d-flex lh-1">
+        <label>Date:</label>
+        <p>{{ reportData.date }}</p>
+      </div>
+      <div class="d-flex lh-1">
+        <label>Name of Product :</label>
+        <p>{{ reportData.itemName }}</p>
+      </div>
+      <div class="d-flex lh-1">
+        <label>Batch Size :</label>
+        <p>{{ reportData.batchSize }}</p>
+      </div>
+      <div class="d-flex lh-1">
+        <label>Batch Code :</label>
+        <p>{{ rowData?.batchNumber }}</p>
+      </div>
+      <div class="d-flex lh-1">
+        <label>Weighing done by :</label>
+        <p>{{ reportData.weighing }}</p>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Product Name</th>
+          <th>Calculated Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ingredient of dataSource; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ ingredient.productName }}</td>
+          <td>{{ ingredient.calculatedQty }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

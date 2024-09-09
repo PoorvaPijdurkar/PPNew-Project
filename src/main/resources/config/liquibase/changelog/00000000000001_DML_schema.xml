@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="Shiv" id="000000000000100" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            insert into procure.SKU (PRODUCT_NAME,PRODUCT_CODE,PRODUCT_TYPE,UNIT_OF_MEASURE,PRICE,QUANTITY)
+            VALUES("Soya","123","CROP","KG",200.2,80.2)
+            ,("Toor","3423","CROP","KG",100.0,60.2) ,
+            ("Apple","8423","CROP","KG",20.2,87.3),
+            ("Chiku","5423","CROP","KG",30.2,100.2),
+            ("Papaya","2423","CROP","KG",50.2,23.2);
+
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shiv" id="000000000000101" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            insert into city(CITY_CODE,CITY_NAME)
+            VALUES ("100","Ahmednagar"),
+            ("101","Akola"),
+            ("102","Amravati"),
+            ("103","Aurangabad"),
+            ("104","Beed"),
+            ("105","Bhandara"),
+            ("106","Buldhana"),
+            ("107","Chandrapur"),
+            ("108","Dhule"),
+            ("109","Gadchiroli"),
+            ("110","Gondia"),
+            ("111","Hingoli"),
+            ("112","Bhiwandi-Nizampur"),
+            ("113","Jalgaon"),
+            ("114","Jalgaon"),
+            ("115","Jalna"),
+            ("116","Kolhapur"),
+            ("117","Latur"),
+            ("118","Mumbai City"),
+            ("119","Mumbai Suburban"),
+            ("120","Nagpur"),
+            ("121","Nanded"),
+            ("122","Nandurbar"),
+            ("123","Dharashiv"),
+            ("124","Palghar"),
+            ("125","Parbhani"),
+            ("126","Pune"),
+            ("127","Raigad"),
+            ("128","Ratnagiri"),
+            ("129","Sangli"),
+            ("130","Satara"),
+            ("131","Sindhudurg"),
+            ("132","Solapur"),
+            ("133","Thane"),
+            ("134","Wardha"),
+            ("135","Washim"),
+            ("136","Yavatmal");
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shiv" id="000000000000102" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            insert into state (STATE_CODE,STATE_NAME)
+            VALUES("MH","Maharashtra");
+        </sql>
+    </changeSet>
+
+    <changeSet author="Shiv" id="000000000000103" context="dev">
+        <sql endDelimiter=";" splitStatements="true">
+            insert into country (COUNTRY_CODE,COUNTRY_NAME)
+            VALUES("IN","INDIA");
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
+
+

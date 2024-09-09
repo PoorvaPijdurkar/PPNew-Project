@@ -1,0 +1,86 @@
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  font-family: system-ui;
+  margin-left: -45px;
+}
+.color-box p {
+  font-weight: 600;
+  font-size: 18px;
+}
+.top-right-corner {
+  position: relative;
+  top: -9px;
+  margin-left: 46px;
+  display: flex;
+  align-items: center;
+
+  .top-right-corner input {
+    margin-right: 8px;
+  }
+  .inputType {
+    margin-left: 2px;
+  }
+  .action-button {
+    margin-left: 8px;
+  }
+}
+
+.bottom-border-card {
+  width: 25%;
+  margin-bottom: 10px;
+  height: 149px;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: 0 1px 1px rgba(1, 1, 1, 1.1);
+}
+
+.hidden-input {
+  width: 111px;
+}
+h2 {
+  font-size: 35px;
+  font-weight: 600;
+}
+.mat-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.mat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+button {
+  background-color: #013b62;
+  color: #fff;
+  margin-right: 3px;
+}
+#container {
+  margin: 5% auto;
+  margin-top: 20px;
+}
+
+col-xs-1-5 {
+  width: 16px;
+  padding: 13px;
+}
+.btn {
+  margin-top: 12px;
+  margin-left: -21px;
+  border: none;
+}
+.action-button1 {
+  background-color: #f2f2f2;
+  margin-left: 5px;
+  color: black;
+}
+label {
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 119px;
+}
+@media (max-width: 768px) {
+  label {
+    margin-left: 85px;
+  }
+}

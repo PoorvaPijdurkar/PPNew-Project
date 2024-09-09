@@ -1,0 +1,449 @@
+$black-55-opacity: rgba (#000, 0.55);
+$white-55-opacity: rgba (#fff, 0.55);
+$black-35-opacity: rgba (#000, 0.35);
+$white-35-opacity: rgba (#fff, 0.35);
+$black-15-opacity: rgba (#000, 0.15);
+$white-15-opacity: rgba (#fff, 0.15);
+$black-54-opacity: rgba (#000, 0.54);
+$black-10-opacity: rgba (#000, 0.1);
+$black-5-opacity: rgba (#000, 0.05);
+$dark-primary-text: rgba (#000, 0.87);
+$light-primary-text: #fff;
+$nx-cc-white: #fff;
+$nx-primary: (
+  50: #e6e7ea,
+  100: #clc4cb,
+  200: #979da8,
+  300: #6d7685,
+  400: #4e586b,
+  500: #2f3b51,
+  600: #2a354a,
+  700: #232d40,
+  800: #ld2637,
+  900: #121927,
+  A100: #6895ff,
+  A200: #3571ff,
+  A400: #024dff,
+  A700: #0044e8,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #fff,
+    400: #fff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #000,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff,
+  ),
+);
+$nx-accent: (
+  50: #e2eff0,
+  100: #b7d7da,
+  200: #88bdc1,
+  300: #58a2a8,
+  400: #348e96,
+  500: #107a83,
+  600: #0e727b,
+  800: #095d66,
+  900: #054a53,
+  A100: #86efff,
+  A200: #53e8ff,
+  A400: #20e1ff,
+  A700: #07ddff,
+  A800: #f2d681,
+  A900: #9ad39b,
+  A1000: #91cef2,
+  A1100: #ea918e,
+  A1200: #3e3e3e,
+  A1300: #029aa5,
+  A1400: #dcddde,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #fff,
+    400: #fff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #000,
+    A200: #000,
+    A400: #000,
+    A700: #000,
+  ),
+);
+$nx-warn: (
+  50: #fae8e4,
+  100: #f2c5bc,
+  200: #ea9f8f,
+  300: #e27962,
+  400: #db5c40,
+  500: #d53f1e,
+  600: #d0391a,
+  700: #ca3116,
+  800: #c42912,
+  900: #ba1b0a,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #fff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #000,
+    A200: #000,
+    A400: #000,
+    A700: #000,
+  ),
+);
+
+$nx-warn-dark: (
+  50: #ffflee,
+  100: #ffddd6,
+  200: #ffc7ba,
+  300: #feb09e,
+  400: #fe9f8a,
+  500: #febe75,
+  600: #fe866d,
+  700: #fe7b62,
+  800: #fe7158,
+  900: #fd5f45,
+  A100: #fff,
+  A200: #fff,
+  A400: #ffedeb,
+  A700: #ffd7d1,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #000,
+    600: #000,
+    700: #000,
+    800: #000,
+    900: #000,
+    A100: #000,
+    A200: #000,
+    A400: #000,
+    A700: #000,
+  ),
+);
+
+$nx-black: (
+  50: #e0e0e0,
+  100: #b3b3b3,
+  200: #808080,
+  300: #4d4d4d,
+  400: #262626,
+  500: #000,
+  600: #000,
+  700: #000,
+  800: #000,
+  900: #000,
+  A100: #a6a6a6,
+  A200: #8c8c8c,
+  A400: #737373,
+  A700: #666,
+  A800: #ececec,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #fff,
+    400: #fff,
+    500: #fff,
+    600: #ffe,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #000,
+    A200: #000,
+    A400: #fff,
+    A700: #fff,
+  ),
+);
+
+$nx-grey: (
+  50: #fafafa,
+  100: #f5f5f5,
+  200: #eee,
+  300: #e0e0e0,
+  400: #bdbdbd,
+  500: #9e9e9e,
+  600: #757575,
+  700: #616161,
+  800: #424242,
+  900: #212121,
+  Al00: #eff,
+  A200: #eee,
+  A400: #bdbdbd,
+  A700: #616161,
+  A800: #eaeaea,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+  ),
+);
+
+$nx-light-theme-background: (
+  status-bar: map_get
+    (
+      $nx-black,
+      50,
+    ),
+  app-bar: #f5f5f5,
+  background: #fafafa,
+  hover: rgba
+    (
+      #000,
+      0.04,
+    ),
+  card: #fff,
+  dialog: #fff,
+  disabled-button: rgba
+    (
+      #000,
+      0.12,
+    ),
+  raised-button: #fff,
+  button-primary-hover-focus: map_get
+    (
+      $nx-accent,
+      50,
+    ),
+  button-secondary-hover-focus: map_get
+    (
+      $nx-grey,
+      A800,
+    ),
+  button-toggle-hover: map_get
+    (
+      $nx-accent,
+      A1300,
+    ),
+  focused-button: rgba
+    (
+      #000,
+      0.06,
+    ),
+  selected-button: map_get
+    (
+      $nx-accent,
+      500,
+    ),
+  selected-disabled-button: #bdbdbd,
+  disabled-button-toggle: #eee,
+  unselected-chip: map_get
+    (
+      Snx-black,
+      50,
+    ),
+  disabled-list-option: #eee,
+  chip: $black-15-opacity,
+  chip-hover: $black-55-opacity,
+  chip-close: $black-35-opacity,
+  alert-warn: map_get
+    (
+      $nx-accent,
+      A800,
+    ),
+  alert-success: map_get
+    (
+      $nx-accent,
+      A900,
+    ),
+  alert-info: map_get
+    (
+      $nx-accent,
+      A1000,
+    ),
+  code-background: #fae8e4,
+  spinner-background: #nx-cc-white,
+  spinner-stroke-color: map_get
+    (
+      $nx-accent,
+      500,
+    ),
+  accumulator-selected: $black-10-opacity,
+  accumulator-hover: $black-5-opacity,
+  form-field-underline-focused: map_get
+    (
+      $nx-primary,
+      500,
+    ),
+  button-primary: map_get
+    (
+      $nx-accent,
+      500,
+    ),
+  // background of primary button
+  tab-ink-bar: map_get
+    (
+      $nx-accent,
+      500,
+    ),
+  tab-label-focus: rgba
+    (
+      map_get ($nx-accent, 100),
+      0.3,
+    ),
+  alert-danger: map_get
+    (
+      $nx-accent,
+      A1100,
+    ),
+  popover: #fff,
+);
+
+$nx-light-theme-foreground: (
+  base: map_get
+    (
+      $nx-black,
+      500,
+    ),
+  divider: rgba
+    (
+      #000,
+      0.15,
+    ),
+  dividers: rgba
+    (
+      #000,
+      0.12,
+    ),
+  disabled: rgba
+    (
+      #000,
+      0.38,
+    ),
+  disabled-button: rgba
+    (
+      #000,
+      0.38,
+    ),
+  disabled-text: rgba
+    (
+      #000,
+      0.35,
+    ),
+  hint-text: rgba
+    (
+      #000,
+      0.38,
+    ),
+  secondary-text: rgba
+    (
+      #000,
+      0.54,
+    ),
+  icon: rgba
+    (
+      #000,
+      0.54,
+    ),
+  icons: rgba
+    (
+      #000,
+      0.54,
+    ),
+  text: rgba
+    (
+      #000,
+      0.85,
+    ),
+  slider-min: rgba
+    (
+      #000,
+      0.87,
+    ),
+  slider-off: rgba
+    (
+      #000,
+      0.26,
+    ),
+  slider-off-active: rgba
+    (
+      #000,
+      0.38,
+    ),
+  chip-text: map_get
+    (
+      $nx-black,
+      500,
+    ),
+  chip-text-hover: #fff,
+  chip-close-hover: #fff,
+  alert-warn-divider: map_get
+    (
+      $nx-accent,
+      A800,
+    ),
+  alert-success-divider: map_get
+    (
+      $nx-accent,
+      A900,
+    ),
+  alert-info-divider: map_get
+    (
+      $nx-accent,
+      A1000,
+    ),
+  alert-danger-divider: map_get
+    (
+      $nx-accent,
+      A1100,
+    ),
+  alert-text: map_get
+    (
+      #nx-accent,
+      A1200,
+    ),
+  button-toggle-text: #fff,
+  popover-border: map_get
+    (
+      $nx-accent,
+      A1400,
+    ),
+  code-text: #c2185b,
+  icon-general-color: rgba
+    (
+      #000,
+      0.54,
+    ),
+  icon-fab-color: #fff,
+  icon-button-color: #fff,
+  form-field-placeholder-focused: map_get
+    (
+      $nx-primary,
+      500,
+    ),
+  form-field-required-marker-focused: map_get
+    (
+      $nx-primary,
+      500,
+    ),
+  button-primary: #fff,
+);

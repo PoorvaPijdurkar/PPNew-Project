@@ -1,0 +1,66 @@
+<!--date-range-picker-->
+<div class="top-right-corner">
+  <h3 class="title">My Orders</h3>
+  <div>
+    <label>Date </label>
+    <input
+      placeholder="DD/MM/YY - DD/MM-YY"
+      type="text"
+      [alwaysShowCalendars]="true"
+      [linkedCalendars]="true"
+      ngxDaterangepickerMd
+      [(ngModel)]="selected"
+      [ranges]="ranges"
+      class="inputType"
+    />
+  </div>
+  <button mat-button class="action-button" (click)="applyDateRange()">APPLY</button>
+  <button mat-button class="action-button1" (click)="resetDateRange()">RESET</button>
+</div>
+
+<div class="row" style="display: flex; margin-left: -15px; margin-top: 13px">
+  <!-- progress -->
+  <div class="col-xs-1-5" style="flex: 1; cursor: pointer">
+    <jhi-order-statistics [orderStatistics]="orderStatisticsData[4]" (click)="onClick(orderStatisticsData[4].orderCategory)">
+    </jhi-order-statistics>
+  </div>
+
+  <!-- failed -->
+  <div class="col-xs-1-5" style="flex: 1; cursor: pointer">
+    <jhi-order-statistics [orderStatistics]="orderStatisticsData[1]" (click)="onClick(orderStatisticsData[1].orderCategory)">
+    </jhi-order-statistics>
+  </div>
+
+  <!-- waiting for approval-->
+  <div class="col-xs-1-5" style="flex: 1; cursor: pointer">
+    <jhi-order-statistics [orderStatistics]="orderStatisticsData[2]" (click)="onClick(orderStatisticsData[2].orderCategory)">
+    </jhi-order-statistics>
+  </div>
+
+  <!-- completed-->
+  <div class="col-xs-1-5" style="flex: 1; cursor: pointer">
+    <jhi-order-statistics [orderStatistics]="orderStatisticsData[3]" (click)="onClick(orderStatisticsData[3].orderCategory)">
+    </jhi-order-statistics>
+  </div>
+
+  <!-- total Orders-->
+  <div class="col-xs-1-5" style="flex: 1; cursor: pointer">
+    <jhi-order-statistics [orderStatistics]="orderStatisticsData[0]" (click)="onClick(orderStatisticsData[0].orderCategory)">
+    </jhi-order-statistics>
+  </div>
+</div>
+
+<!--tabs -->
+<div class="btn">
+  <mat-tab-group>
+    <mat-tab label="SKU WISE ANALYSIS"> </mat-tab>
+    <mat-tab label="ORDER WISE ANALYSIS"> </mat-tab>
+  </mat-tab-group>
+</div>
+
+<div class="row">
+  <div id="container" class="col-8"></div>
+  <div class="col-4">
+    <jhi-pie-chart [data]="perData"></jhi-pie-chart>
+  </div>
+</div>

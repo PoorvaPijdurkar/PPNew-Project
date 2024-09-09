@@ -1,0 +1,71 @@
+<div class="modal-header">
+  <h4 class="modal-title">Modify Order</h4>
+
+  <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <jhi-alert-error></jhi-alert-error>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <label class="col-2">Order Number :</label>
+        <label class="col-2 orderFieldVal">{{ this.rowData['orderNumber'] }}</label>
+        <label class="col-2">Supplier Name</label>
+        <label class="col-2 orderFieldVal"
+          >{{ this.rowData['supplierDetails']?.firstName + ' ' + this.rowData['supplierDetails']?.lastName }}
+        </label>
+        <label class="col-2">Mobile Number</label>
+        <label class="col-2 orderFieldVal">{{ this.rowData['supplierDetails'].mobileNumber }}</label>
+      </div>
+      <br />
+      <div class="row">
+        <label class="col-2">Quantity Supplied :</label>
+        <label class="col-2 orderFieldVal">{{ this.rowData['quantitySupplied'] }}</label>
+        <label class="col-2">RatePrice :</label>
+        <label class="col-2 orderFieldVal">{{ this.rowData['supplierRatePrice'] }}</label>
+        <label class="col-2">Weighted Average:</label>
+        <label class="col-2 orderFieldVal">-</label>
+      </div>
+      <br />
+      <form role="form" [formGroup]="editForm">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Accepted Quantity"
+                name="acceptedQty"
+                formControlName="acceptedQty"
+                (input)="updateRejectedQty()"
+              />
+              <mat-error *ngIf="editForm.get('acceptedQty')?.hasError('required')">This field is required.</mat-error>
+              <mat-error *ngIf="editForm.get('acceptedQty')?.hasError('invalidAcceptedQty')"
+                >Accepted quantity must not be greater than {{ this.rowData?.quantitySupplied }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field>
+              <input matInput placeholder="Rejected Quantity" name="rejectedQty" formControlName="rejectedQty" />
+              <mat-error *ngIf="editForm.get('rejectedQty')?.hasError('required')">This field is required.</mat-error>
+              <mat-error *ngIf="editForm.get('rejectedQty')?.hasError('maxlength')"
+                >This field cannot be longer than 60 characters.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()"><fa-icon icon="ban"></fa-icon>&nbsp;</button>
+
+  <button type="submit" (click)="save()" class="btn btn-primary">
+    <fa-icon icon="save"></fa-icon>
+  </button>
+</div>

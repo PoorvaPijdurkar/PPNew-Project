@@ -1,0 +1,56 @@
+orderFieldVal {
+  font-weight: normal;
+}
+.activated {
+  color: green;
+  font-weight: normal;
+}
+table {
+  width: 80%;
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.mat-column-position {
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.mat-column-name {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 28% !important;
+  width: 30% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-qty {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 28% !important;
+  width: 30% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-deleteAndEditData {
+  width: 20% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}

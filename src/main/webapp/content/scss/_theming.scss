@@ -1,0 +1,23 @@
+@import 'palette';
+
+@function nx-contrast($palette, $hue) {
+  @return mat-contrast($palette, $hue);
+}
+
+@function nx-palette($base-palette, $default: 500, $lighter: 100, $darker: 700) {
+  @return mat-palette($base-palette, $default, $lighter, $darker);
+}
+
+@function nx-color($palette, $hue: default, $opacity: null) {
+  @return mat-color($palette, $hue, $opacity);
+}
+
+@function nx-light_theme(
+  $primary,
+  $accent,
+  $warn: nx-palette($mat-red),
+  $nx-light-theme-background: $nx-light-theme-background,
+  $nx-light-theme-foreground: $nx-light-theme-foreground
+) {
+  @return (primary: $primary, accent: $accent, warn: $warn, foreground: $nx-light-theme-foreground, background: $nx-light-theme-background);
+}

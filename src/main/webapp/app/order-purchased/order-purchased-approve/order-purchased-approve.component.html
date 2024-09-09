@@ -1,0 +1,20 @@
+<form *ngIf="orderPurchase" name="deleteForm" (ngSubmit)="confirmDelete(orderPurchase)">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm {{ action }} order</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <p>Are you sure you want to {{ action }} order ?</p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>{{ action }}</span>
+    </button>
+    <button type="submit" *ngIf="action === 'Approve'" class="btn btn-primary">
+      <span>{{ action }}</span>
+    </button>
+  </div>
+</form>

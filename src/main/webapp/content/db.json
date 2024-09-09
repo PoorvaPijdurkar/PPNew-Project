@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Nora Thomas",
+    "account": 177000,
+    "calls": 24,
+    "minutes": 25.65,
+    "callRecords": [
+      {
+        "name": "susan",
+        "callId": 555,
+        "duration": 72,
+        "switchCode": "SW3",
+        "direction": "Out",
+        "number": "(00) 88542069"
+      },
+      {
+        "name": "susan",
+        "callId": 556,
+        "duration": 61,
+        "switchCode": "SW3",
+        "direction": "In",
+        "number": "(01) 7432576"
+      },
+      {
+        "name": "susan",
+        "callId": 557,
+        "duration": 90,
+        "switchCode": "SW5",
+        "direction": "In",
+        "number": "(09) 76105491"
+      },
+      {
+        "name": "susan",
+        "callId": 558,
+        "duration": 83,
+        "switchCode": "SW5",
+        "direction": "In",
+        "number": "(03) 72020613"
+      }
+    ]
+  }
+]

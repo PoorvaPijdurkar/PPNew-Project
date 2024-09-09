@@ -1,0 +1,11 @@
+id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by
+1;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;;true;en;system;system
+2;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;;true;en;system;system
+3;production_manager;$2y$10$NHnefe/4yT022dYq7.FzDehDQTNqEFGo53OCzYFahi7gS46OKFT4.;production_manager;production_manager;production_manager10@gmail.com;;true;en;system;system
+4;production_field_officer;$2y$10$0buRibl7h1ZZ1Rpy7rQl.u19Fsx7pRfdlXnoyrCc2GX6d8meULCuq;production_field_officer;production_field_officer;production_field_officer10@gmail.com;;true;en;system;system
+5;field_officer;$2y$10$CzcC/aY9duLLSlx.ZOd/duHY4DoFrMgwMHt4X6fyYebjwC3bJg1Sm;field_officer;field_officer;field_officer10@gmail.com;;true;en;system;system
+6;procurement_manager;$2y$10$b3NOpnsHk9/8LzaXetkDd.o/qtvQLf5aueOy7/SGkj/i7gO/ZLveC;procurement_manager;procurement_manager;procurement_manager10@gmail.com;;true;en;system;system
+7;procurement_field_officer;$2y$10$9xIYQ8HgoJs8ylmdbhJEze.rDmgC33BFK0cC3sefEPQ2y8fL79bTi;procurement_field_officer;procurement_field_officer;procurement_field_officer10@gmail.com;;true;en;system;system
+8;quality_manager;$2y$10$9lK915ZJLbHSs7cTNyUnN.ptqqwdSSObmwGVxf2Wmi2WJMS0K1AwO;quality_manager;quality_manager;quality_manager10@gmail.com;;true;en;system;system
+9;quality_field_officer;$2y$10$.ItJlJHymJjDh79We2DH5OhtWQx4f/VCLMwW0OB.NmF0fK4BKDkXm;quality_field_officer;quality_field_officer;quality_field_officer10@gmail.com;;true;en;system;system
+

@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="myUserLabel">Create or edit a Department</h2>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="row mb-3 mt-3">
+        <label class="col-2 labelCls">Department Name</label>
+        <div class="col-6">
+          <mat-form-field>
+            <input matInput name="departmentName" formControlName="departmentName" />
+          </mat-form-field>
+          <div
+            *ngIf="editForm.get('departmentName')!.invalid && (editForm.get('departmentName')!.dirty || editForm.get('departmentName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('departmentName')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('departmentName')?.errors?.maxlength">
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-2 labelCls">Department Code</label>
+        <div class="col-6">
+          <mat-form-field>
+            <input matInput name="departmentCode" formControlName="departmentCode" />
+          </mat-form-field>
+          <div
+            *ngIf="
+              editForm.get('departmentCode')!.invalid && (editForm.get('departmentCode')!.dirty || editForm.get('departmentCode')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('departmentCode')?.errors?.required"> This field is required. </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('departmentCode')?.errors?.maxlength">
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <button *ngIf="!isViewMode()" type="button" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>
+        <span>Cancel</span>
+      </button>
+
+      <button *ngIf="!isViewMode()" type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>
+        &nbsp;<span>Save</span>
+      </button>
+
+      <button type="submit" *ngIf="isViewMode()" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>
+        &nbsp;<span>Back</span>
+      </button>
+    </form>
+  </div>
+</div>

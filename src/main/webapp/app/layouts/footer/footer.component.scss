@@ -1,0 +1,26 @@
+.mat-toolbar {
+  min-height: 30px !important;
+  height: 30px !important;
+}
+
+.mat-toolbar-row {
+  min-height: 30px !important;
+  height: 30px !important;
+}
+
+footer {
+  text-align: right;
+}
+
+.login-left-col {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 70%;
+  justify-content: space-between;
+}
+
+.login-right-col {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+}

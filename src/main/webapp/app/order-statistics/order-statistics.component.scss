@@ -1,0 +1,25 @@
+table-critical {
+  width: 200px;
+  text-align: left;
+  font-weight: bold;
+}
+
+table-countval {
+  width: 201px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+:hover {
+  background-color: #ebebedda;
+}
+
+:active {
+  background-color: #dcdcdcd2;
+}
+@media (max-width: 1024px) {
+  .table-critical {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-3">
+    <span class="hipster img-fluid rounded"></span>
+  </div>
+
+  <div class="col-md-9">
+    <h1 class="display-4"><span>Welcome,Procure Prime</span></h1>
+
+    <div [ngSwitch]="account !== null">
+      <div class="alert alert-success" *ngSwitchCase="true">
+        <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
+      </div>
+
+      <!--      <div class="alert alert-warning" *ngSwitchCase="false">-->
+      <!--        <span>If you want to </span>-->
+      <!--        <a class="alert-link" (click)="login()">sign in</a>-->
+      <!--      </div>-->
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        <a class="alert-link" (click)="login()">sign in</a>
+        <span>You don't have an account yet?</span>&nbsp;
+        <a class="alert-link" routerLink="account/register">Register a new account</a>
+      </div>
+    </div>
+    <p>If you have any question on Procure Prime:</p>
+    <ul>
+      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">Procure Prime Homepage</a></li>
+      <li>
+        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
+          >Procure Prime bug tracker</a
+        >
+      </li>
+      <li>
+        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">Procure Prime public chat room</a>
+      </li>
+      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow @procureprime on Twitter</a></li>
+    </ul>
+  </div>
+</div>

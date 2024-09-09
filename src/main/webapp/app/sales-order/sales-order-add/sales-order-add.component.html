@@ -1,0 +1,95 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <mat-card>
+      <mat-card-content>
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <h3 *ngIf="screenMode === 'edit'" id="myUserLabel">Edit Sales Order</h3>
+          <h3 *ngIf="screenMode === 'add'" id="myUserLabel">Add Sales Order</h3>
+
+          <jhi-alert-error></jhi-alert-error>
+
+          <div class="row mb-3 mt-3">
+            <div class="col-6">
+              <mat-form-field class="mat-field1" appearance="outline">
+                <mat-label>Customer Name</mat-label>
+                <mat-select placeholder="Select Customer Name" formControlName="customerName"
+                  (selectionChange)="onCustomerNameChange()">
+                  <mat-option *ngFor="let customer of CustomerData"
+                    [value]="customer.firstName + ' ' + customer.lastName">
+                    {{ customer.firstName }} {{ customer.lastName }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editForm.get('customerName')!.invalid && (editForm.get('customerName')!.dirty || editForm.get('customerName')!.touched)">
+                  <span *ngIf="editForm.get('customerName')?.errors?.required">Customer Name is Mandatory</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-6">
+              <mat-form-field class="mat-field1" appearance="outline">
+                <mat-label>Item Name</mat-label>
+                <mat-select placeholder="Select Item Name" formControlName="itemName"
+                  (selectionChange)="onItemNameChange()">
+                  <mat-option *ngFor="let item of ItemData" [value]="item.productName">{{ item.productName
+                    }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="editForm.get('itemName')!.invalid && (editForm.get('itemName')!.dirty || editForm.get('customerName')!.touched)">
+                  <span *ngIf="editForm.get('itemName')?.errors?.required">Item Name is Mandatory</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: -12px">
+            <div class="col-6">
+              <mat-form-field class="mat-field1" appearance="outline">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [min]="minDate" [matDatepicker]="picker1" formControlName="deliveryDate" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="
+                    editForm.get('deliveryDate')!.invalid && (editForm.get('deliveryDate')!.dirty || editForm.get('deliveryDate')!.touched)
+                  ">
+                  <span *ngIf="editForm.get('deliveryDate')?.errors?.required">Delivery Date is Mandatory</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-6">
+              <mat-form-field class="mat-field1" appearance="outline">
+                <input matInput type="text" name="orderQuantity" formControlName="orderQuantity" placeholder="Quantity"
+                  numbersOnly />
+                <mat-error *ngIf="
+                    editForm.get('orderQuantity')!.invalid &&
+                    (editForm.get('orderQuantity')!.dirty || editForm.get('orderQuantity')!.touched)
+                  ">
+                  <span *ngIf="editForm.get('orderQuantity')?.errors?.required">Quantity is Mandatory</span>
+                  <span *ngIf="editForm.get('orderQuantity')?.errors?.min">Quantity cannot be negative.</span>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-Select1" appearance="outline">
+                <input matInput formControlName="unitOfMeasure" [readonly]="true" placeholder="Unit" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <br />
+          <button *ngIf="!isViewMode()" type="button" class="btn btn-secondary mr-2" (click)="previousState()"
+            style="margin-right: 8px">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+          </button>
+
+          <button type="submit" *ngIf="!isViewMode()" class="btn btn-primary">
+            <fa-icon icon="save" style="margin-right: 7px"></fa-icon><span>Save</span>
+          </button>
+
+          <button type="submit" *ngIf="isViewMode()" (click)="previousState()" class="btn btn-info">
+            <fa-icon icon="arrow-left"></fa-icon><span>Back</span>
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

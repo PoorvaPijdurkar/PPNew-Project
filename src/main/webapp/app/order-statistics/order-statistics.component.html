@@ -1,0 +1,27 @@
+<mat-card
+  [elevation]="3"
+  tabindex="0"
+  isClickable="true"
+  style="
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: thick;
+    width: 100%;
+    height: 124px;
+    display: flex;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  "
+  [style.border-bottom-color]="color"
+>
+  <mat-card-content>
+    <table class="mat-col-sm-12" style="padding-top: 0px; padding-bottom: 0px; border-collapse: separate; border-spacing: 0 1.2rem">
+      <tr>
+        <td style="font-weight: 600" class="table-critical">{{ selectedCategory }}</td>
+      </tr>
+      <tr>
+        <td style="font-size: 19px; font-weight: 600" class="table-countval">{{ orderStatistics.totalOrder }}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>

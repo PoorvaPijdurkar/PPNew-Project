@@ -1,0 +1,29 @@
+<mat-toolbar class="mat-elevation-z8 custom-toolbar" style="height: 52px; background-color: #00485e">
+  <mat-list-item (click)="selectRoute('/')">
+    <mat-icon class="logo-img" style="border-radius: 4px"></mat-icon>
+    <span class="text">PROCURE PRIME</span>
+  </mat-list-item>
+
+  <span style="flex: 1"></span>
+
+  <button mat-icon-button [matMenuTriggerFor]="accountMenu" style="color: white; margin-left: auto">
+    <mat-icon style="font-size: 33px">account_box</mat-icon>
+  </button>
+  <mat-menu #accountMenu="matMenu" id="mat" style="margin-top: 45px">
+    <button *ngIf="!isLoggedIn" mat-menu-item (click)="login()">
+      <fa-icon [icon]="['fas', 'sign-in-alt']" class="mr-2"></fa-icon> Sign in
+    </button>
+    <button *ngIf="!isLoggedIn" mat-menu-item routerLink="account/register">
+      <fa-icon [icon]="['fas', 'user-plus']" class="mr-2"></fa-icon> Register
+    </button>
+    <button *ngIf="isLoggedIn" mat-menu-item routerLink="account/settings">
+      <fa-icon [icon]="['fas', 'wrench']" class="mr-2"></fa-icon> Settings
+    </button>
+    <button *ngIf="isLoggedIn" mat-menu-item routerLink="account/password">
+      <fa-icon [icon]="['fas', 'lock']" class="mr-2"></fa-icon> Password
+    </button>
+    <button *ngIf="isLoggedIn" mat-menu-item (click)="logout()">
+      <fa-icon [icon]="['fas', 'sign-out-alt']" class="mr-2"></fa-icon> Sign out
+    </button>
+  </mat-menu>
+</mat-toolbar>

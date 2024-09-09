@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <h2 id="myUserLabel">Supplier-Details</h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-select placeholder="Supplier Type" name="supplierType" formControlName="supplierType">
+            <mat-option *ngFor="let type of supplierTypes" [value]="type">{{ type }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="editForm?.get('supplierType')?.errors?.required">Supplier Type is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="First Name" name="firstName" formControlName="firstName" />
+          <mat-error *ngIf="editForm.get('firstName')?.hasError('required')">This field is required.</mat-error>
+          <mat-error *ngIf="editForm.get('firstName')?.hasError('maxlength')">This field cannot be longer than 60 characters.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Last Name" name="lastName" formControlName="lastName" />
+          <mat-error *ngIf="editForm.get('lastName')?.hasError('required')">This field is required.</mat-error>
+
+          <mat-error *ngIf="editForm.get('lastName')?.hasError('maxlength')">This field cannot be longer than 60 characters.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Email ID" name="emailId" formControlName="emailId" />
+          <mat-error *ngIf="editForm.get('emailId')?.hasError('required')">This field is required.</mat-error>
+          <mat-error *ngIf="editForm.get('emailId')?.hasError('email')">Please enter a valid email address.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Address" name="address" formControlName="address" />
+          <mat-error *ngIf="editForm.get('address')?.hasError('required')">This field is required.</mat-error>
+          <mat-error *ngIf="editForm.get('address')?.hasError('maxlength')">This field cannot be longer than 100 characters.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Mobile Number" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber" />
+          <mat-error *ngIf="editForm.get('mobileNumber')?.hasError('required')">This field is required.</mat-error>
+          <mat-error *ngIf="editForm.get('mobileNumber')?.hasError('pattern')">Please enter a valid 10-digit mobile number</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="GST Number" name="gstNumber" formControlName="gstNumber" />
+        </mat-form-field>
+        <div *ngIf="editForm.get('gstNumber')?.invalid && (editForm.get('gstNumber')?.dirty || editForm.get('gstNumber')?.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('gstNumber')?.hasError('pattern')"
+            >Please enter a valid GST number</small
+          >
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Total Land Holding" name="totalLandHolding" formControlName="totalLandHolding" />
+        </mat-form-field>
+        <div
+          *ngIf="
+            editForm.get('totalLandHolding')?.invalid &&
+            (editForm.get('totalLandHolding')?.dirty || editForm.get('totalLandHolding')?.touched)
+          "
+        >
+          <small class="form-text text-danger" *ngIf="editForm.get('totalLandHolding')?.hasError('pattern')"
+            >Please enter a valid number</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="!isViewMode()" type="button" class="btn btn-secondary" (click)="previousState()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+    </button>
+
+    <button type="submit" *ngIf="!isViewMode()" class="btn btn-primary">
+      <fa-icon icon="save" style="margin-right: 7px"></fa-icon><span>Save</span>
+    </button>
+
+    <button type="submit" *ngIf="isViewMode()" (click)="previousState()" class="btn btn-info">
+      <fa-icon icon="arrow-left"></fa-icon><span>Back</span>
+    </button>
+  </form>
+</div>

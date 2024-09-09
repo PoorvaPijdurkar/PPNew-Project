@@ -1,0 +1,41 @@
+.content {
+  padding: 24px;
+}
+.icon {
+  background-color: darkgray;
+}
+.mat-list-item.active {
+  background-color: yellow;
+  color: #000;
+}
+.mat-list-item.active .home-icon,
+.mat-list-item.active .list-icon {
+  background-color: yellow;
+  color: black;
+}
+
+.custom-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: -35px !important;
+  margin-left: 59px !important;
+}
+.mat-icon-with-border::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  background: transparent;
+  border-left: 3px solid transparent;
+  border-left-color: white;
+  right: 0;
+  top: 0;
+}
+button {
+  color: white;
+}
+.contentNavbar {
+  padding: 24px;
+}

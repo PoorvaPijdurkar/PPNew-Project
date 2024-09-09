@@ -1,0 +1,112 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 *ngIf="!isViewMode()" id="myUserLabel">Create or Edit a Order</h2>
+      <h2 *ngIf="isViewMode()" id="myUserLabel1">View Order</h2>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <div class="mb-3" [hidden]="isAddMode()">
+        <label class="col-2 labelCls">Order Number</label>
+        <mat-form-field>
+          <input matInput name="orderNumber" formControlName="orderNumber" [disabled]="true" />
+        </mat-form-field>
+      </div>
+
+      <div class="mb-3" [hidden]="isAddMode()">
+        <label class="col-2 labelCls">Order Date</label>
+        <mat-form-field>
+          <input matInput name="orderDate" formControlName="orderDate" [disabled]="true" />
+        </mat-form-field>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-2 labelCls">Select Item</label>
+        <div class="col-6">
+          <mat-form-field>
+            <mat-select name="product" formControlName="product" [(value)]="selected" [disabled]="isViewMode()">
+              <mat-option *ngFor="let sku of skuData" [value]="sku">{{ sku.productName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="editForm.get('product')!.invalid && (editForm.get('product')!.dirty || editForm.get('product')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('product')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-2 labelCls">Rate Price</label>
+        <div class="col-6">
+          <mat-form-field>
+            <input matInput name="ratePrice" formControlName="ratePrice" />
+          </mat-form-field>
+          <div *ngIf="editForm.get('ratePrice')!.invalid && (editForm.get('ratePrice')!.dirty || editForm.get('ratePrice')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('ratePrice')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('ratePrice')?.errors?.maxlength"
+              >This field cannot be longer than 10 characters.</small
+            >
+            <small class="form-text text-danger" *ngIf="editForm.get('ratePrice')?.hasError('pattern')"
+              >Please enter a valid price (integer or valid up to 2 decimals).</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-2 labelCls">Quantity Required</label>
+        <div class="col-6">
+          <mat-form-field>
+            <input matInput name="quantityRequired" formControlName="quantityRequired" numbersOnly />
+          </mat-form-field>
+          <div
+            *ngIf="
+              editForm.get('quantityRequired')!.invalid &&
+              (editForm.get('quantityRequired')!.dirty || editForm.get('quantityRequired')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('quantityRequired')?.errors?.required">This field is required.</small>
+            <small class="form-text text-danger" *ngIf="editForm.get('quantityRequired')?.errors?.maxlength"
+              >This field cannot be longer than 10 characters.</small
+            >
+            <small class="form-text text-danger" *ngIf="editForm.get('quantityRequired')?.hasError('pattern')"
+              >Please enter a valid price(integer or valid up to 2 decimals).</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="col-2 labelCls">Estimated Date</label>
+        <!-- <input type="text" class="form-control" name="effectiveDate" formControlName="effectiveDate" /> -->
+        <div class="col-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [min]="minDate" [matDatepicker]="picker1" formControlName="estimatedDate" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <div
+            *ngIf="
+              editForm.get('estimatedDate')!.invalid && (editForm.get('estimatedDate')!.dirty || editForm.get('estimatedDate')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('estimatedDate')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+      </div>
+
+      <button *ngIf="!isViewMode()" type="button" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+
+      <button *ngIf="!isViewMode()" type="submit" [disabled]="isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+
+      <button type="submit" *ngIf="isViewMode()" (click)="previousState()" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center">
+  <div class="col-10">
+    <h2 id="myUserLabel">Order Assignment</h2>
+    <br />
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <label class="col-2">Order Number :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData['orderNumber'] }} </label>
+          <label class="col-2">Item Name : </label>
+          <label class="col-2 orderFieldVal">{{ this.rowData['sku'].productName }} </label>
+          <label class="col-2">Status : </label>
+          <label class="col-2 orderFieldVal activated">{{ this.rowData['status'] }} </label>
+        </div>
+        <br />
+        <div class="row">
+          <label class="col-2">Quantity Required :</label>
+          <label class="col-2 orderFieldVal">{{ this.rowData['quantityRequired'] }} {{ this.rowData['sku'].unitOfMeasure }} </label>
+          <label class="col-2">RatePrice : </label>
+          <label class="col-2 orderFieldVal">{{ this.rowData['ratePrice'] }} </label>
+          <label class="col-2">Estimated Date : </label>
+          <label class="col-2 orderFieldVal">{{ this.rowData['estimatedDate'] }} </label>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <mat-card>
+      <mat-card-header style="font-weight: bold; padding-top: 10px; padding-bottom: 10px">Assign Order</mat-card-header>
+      <mat-card-content *ngIf="editForm">
+        <form name="editForm" role="form" novalidate [formGroup]="editForm">
+          <mat-form-field style="padding-right: 20px">
+            <mat-select placeholder="Select UserName" name="userNames" formControlName="userNames">
+              <mat-option *ngFor="let user of userData" [value]="user">{{ user.login }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="editForm.get('userNames')!.invalid && (editForm.get('userNames')!.dirty || editForm.get('userNames')!.touched)"
+            >
+              <span *ngIf="editForm.controls.userNames?.hasError('required')">UserName is Mandatory</span>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="padding-right: 20px; margin-left: -16px">
+            <input placeholder="Quantity" matInput formControlName="qty" />
+            <mat-error *ngIf="editForm.get('qty')!.invalid && (editForm.get('qty')!.dirty || editForm.get('qty')!.touched)">
+              <span *ngIf="editForm.controls.qty?.hasError('required')">Quantity is Mandatory</span>
+              <span *ngIf="editForm.controls.qty?.hasError('max')"
+                >Quantity should not be more than {{ this.editForm.controls['qty'].errors?.max?.max }}</span
+              >
+              <span *ngIf="editForm.get('qty')!.errors?.newQtyExceedsRemaining">Quantity exceeds remaining quantity</span>
+            </mat-error>
+          </mat-form-field>
+
+          <button style="padding-right: 20px; margin-left: -16px" mat-raised-button class="btn-primary" (click)="add()">Add</button>
+          <button style="padding: 0px" mat-raised-button (click)="resetForm()">Reset</button>
+        </form>
+        <br />
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef>No.</th>
+            <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>User Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name.login }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">{{ element.qty }}</td>
+            <td mat-footer-cell *matFooterCellDef>Total: {{ calculateTotal() }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="deleteAndEditData" sticky>
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button (click)="edit(element)" mat-icon-button color="primary" aria-label="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button (click)="delete(element)" mat-icon-button color="warn" aria-label="Example icon button with a home icon">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+        </table>
+      </mat-card-content>
+      <mat-card-footer>
+        <div class="footer">
+          <button style="margin-right: 10px" mat-raised-button class="btn-primary" (click)="save()">Save</button>
+          <button style="margin-right: 10px" mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

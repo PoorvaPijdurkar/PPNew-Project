@@ -1,0 +1,34 @@
+<div class="row gridText">
+  <div class="pageTitle">{{ pageTitle }}</div>
+  <div class="d-flex justify-content-end pages">
+    <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <span>Refresh </span>
+    </button>
+
+    <button class="btn btn-primary jh-create-entity" (click)="goToSalesOrderAdd()">
+      <fa-icon icon="plus"></fa-icon>
+      <span>Add</span>
+    </button>
+  </div>
+</div>
+
+<jhi-alert-error></jhi-alert-error>
+<jhi-alert></jhi-alert>
+
+<div class="grid-wrapper">
+  <ag-grid-angular
+    #agGrid
+    id="myGrids"
+    class="ag-theme-alpine desktop"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [rowData]="rowData"
+    [pagination]="true"
+    [frameworkComponents]="frameworkComponents"
+    (gridReady)="onGridReady($event)"
+    [floatingFilter]="true"
+    rowSelection="multiple"
+  >
+  </ag-grid-angular>
+</div>
